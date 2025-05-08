@@ -18,6 +18,7 @@ class GameScene extends Phaser.Scene {
         this.load.image('map3', 'assets/map3.png');
         this.load.audio('planeSound', 'assets/planeSound.mp3');
         this.load.audio('shootSound', 'assets/shootSound.mp3');
+        this.load.audio('explosionSound', 'assets/explosionSound.mp3');
         this.load.audio('enemyShootSound', 'assets/enemyShootSound.mp3');
     }
 
@@ -153,6 +154,7 @@ class GameScene extends Phaser.Scene {
         enemy.destroy();
         window.score=(window.score||0)+10;
         window.fuel=Math.min((window.fuel||0)+(10*(4-this.damageMultiplier)),100);
+        const snd = this.sound.add('explosionSound', { volume: 0.3 }); snd.play(); snd.once('complete', () => snd.destroy());
     }
 
     onPlayerHit(player, enemy) {
@@ -160,6 +162,7 @@ class GameScene extends Phaser.Scene {
         const explosion = this.add.image(player.x, player.y, 'explosion').setDepth(10).setScale(3);
         this.time.delayedCall(200, () => explosion.destroy());
         window.isDead = true;
+        const snd = this.sound.add('explosionSound', { volume: 0.3 }); snd.play(); snd.once('complete', () => snd.destroy());
     }
 
     onBulletHitPlayer(player, bullet) {
@@ -168,6 +171,7 @@ class GameScene extends Phaser.Scene {
         const explosion = this.add.image(player.x, player.y, 'explosion').setDepth(10).setScale(3);
         this.time.delayedCall(200, () => explosion.destroy());
         window.fuelDamage += this.damageMultiplier;
+        const snd = this.sound.add('explosionSound', { volume: 0.3 }); snd.play(); snd.once('complete', () => snd.destroy());
     }
 }
 

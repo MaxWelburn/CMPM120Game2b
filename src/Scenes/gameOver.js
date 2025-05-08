@@ -3,8 +3,15 @@ class GameOverScene extends Phaser.Scene {
         super("GameOverScene");
     }
 
+    preload() {
+        this.load.audio('gameOver', 'assets/gameOver.mp3');
+    }
+
     create() {
+        this.sound.stopAll();
         const { width, height } = this.sys.game.config;
+        
+        const snd = this.sound.add('gameOver', { volume: 0.3 }); snd.play(); snd.once('complete', () => snd.destroy());
 
         this.add.text(width / 2, height / 2 - 80, '💀 GAME OVER 💀', {
             font: '35px Arial',

@@ -16,6 +16,7 @@ class IntroScene extends Phaser.Scene {
         this.load.image('earth', 'assets/earth.png');
         this.load.image('moon', 'assets/moon.png');
         this.load.image('plane', 'assets/plane.png');
+        this.load.audio('gameMusic', 'assets/gameMusic.mp3');
     }
 
     create() {
@@ -34,6 +35,8 @@ class IntroScene extends Phaser.Scene {
         window.highestScore = parseInt(localStorage.getItem('highestScore')) || 0;
         window.fuelDamage = 1;
         window.difficulty = "easy";
+        this.gameMusic = this.sound.add('gameMusic', {loop: true, volume: 0.2});
+        this.gameMusic.play();
         
         this.difficultyButton = this.add.text(width/2 - 68, height - 70, `Difficulty: ${this.difficultyLevels[this.difficultyIndex]}`, {
             font: '20px Arial',
